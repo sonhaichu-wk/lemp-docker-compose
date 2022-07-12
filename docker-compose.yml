@@ -3,32 +3,42 @@ services:
   php:
     build:
       context: ./php
-      dockerfile: Dockerfile
-    container_name: php
+      dockerfile: 8.0.Dockerfile
     ports:
       - "8000:8000"
     volumes:
       - "..:/var/www/html"
     depends_on:
-      - mariadb
+      - db
 
   nginx:
     image: nginx:latest
-    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
     links:
       - "php"
     volumes:
-      - "./app:/var/www/html"
+      - "..:/var/www/html"
       - "./nginx/config:/etc/nginx/conf.d"
 
-  mariadb:
-    image: mariadb:10.3.9
-    container_name: mariadb
-    restart: "on-failure"
+  # mariadb:
+  #   image: mariadb:10.3.9
+  #   container_name: mariadb
+  #   restart: "on-failure"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #   volumes:
+  #     - ${PWD}
+
+  db:
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - ${PWD}
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 3307:80
+    environment:
+      - PMA_ARBITRARY=1
