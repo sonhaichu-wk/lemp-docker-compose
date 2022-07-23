@@ -9,7 +9,7 @@ services:
     volumes:
       - "..:/var/www/html"
     depends_on:
-      - db
+      - mysql
 
   nginx:
     image: nginx:latest
@@ -31,14 +31,16 @@ services:
   #   volumes:
   #     - ${PWD}
 
-  db:
+  mysql:
     image: mysql
+    volumes:
+      - "../database/mysql:/var/lib/mysql"
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
   phpmyadmin:
     image: phpmyadmin
-    ports:
-      - 3307:80
     environment:
       - PMA_ARBITRARY=1
