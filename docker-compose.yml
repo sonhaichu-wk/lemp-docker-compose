@@ -1,11 +1,22 @@
 version: "3"
 services:
-  php:
+  php8.0:
     build:
       context: ./php
       dockerfile: 8.0.Dockerfile
     ports:
       - "8000:8000"
+    volumes:
+      - "..:/var/www/html"
+    depends_on:
+      - mysql
+
+  php7.4:
+    build:
+      context: ./php
+      dockerfile: 7.4.Dockerfile
+    ports:
+      - "8001:8000"
     volumes:
       - "..:/var/www/html"
     depends_on:
@@ -43,4 +54,5 @@ services:
   phpmyadmin:
     image: phpmyadmin
     environment:
-      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - UPLOAD_LIMIT=200M
