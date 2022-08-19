@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "..:/var/www/html"
+      - "projects:/var/www/html"
     depends_on:
       - mysql
 
@@ -18,7 +18,7 @@ services:
     ports:
       - "8001:8000"
     volumes:
-      - "..:/var/www/html"
+      - "projects:/var/www/html"
     depends_on:
       - mysql
 
@@ -28,9 +28,10 @@ services:
       - "80:80"
       - "443:443"
     links:
-      - "php"
+      - "php7.4"
+      - "php8.0"
     volumes:
-      - "..:/var/www/html"
+      - "projects:/var/www/html"
       - "./nginx/config:/etc/nginx/conf.d"
 
   # mariadb:
@@ -56,3 +57,11 @@ services:
     environment:
       - PMA_HOST=mysql
       - UPLOAD_LIMIT=200M
+
+volumes:
+  projects:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":/System/Volumes/Data/Users/sonhaichu/Projects"
