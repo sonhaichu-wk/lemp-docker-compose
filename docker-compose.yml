@@ -47,6 +47,7 @@ services:
     image: mysql
     volumes:
       - "../database/mysql:/var/lib/mysql"
+      - "desktop:/root"
     ports:
       - "3306:3306"
     environment:
@@ -65,3 +66,9 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
       device: ":/System/Volumes/Data/Users/sonhaichu/Projects"
+  desktop:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":/System/Volumes/Data/Users/sonhaichu/Desktop"
