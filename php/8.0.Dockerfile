@@ -23,6 +23,8 @@ RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zi
 # RUN docker-php-ext-install hash && docker-php-ext-enable hash
 RUN docker-php-ext-install opcache && docker-php-ext-enable opcache
 
+RUN docker-php-ext-install exif && docker-php-ext-enable exif
+
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 EXPOSE 8000
