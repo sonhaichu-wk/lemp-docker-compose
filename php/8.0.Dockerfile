@@ -15,7 +15,9 @@ RUN docker-php-ext-install dba && docker-php-ext-enable dba
 
 RUN apt-get update && apt-get install -y libcurl4-openssl-dev && docker-php-ext-install curl && docker-php-ext-enable curl
 
-RUN apt-get update && apt-get install -y zlib1g-dev libpng-dev && docker-php-ext-install gd && docker-php-ext-enable gd
+RUN apt-get update && apt-get install -y libwebp-dev libjpeg62-turbo-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg=/usr/include/
+RUN docker-php-ext-install gd && docker-php-ext-enable gd
 
 RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zip && docker-php-ext-enable zip
 
