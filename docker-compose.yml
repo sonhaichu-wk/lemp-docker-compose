@@ -6,6 +6,8 @@ services:
       dockerfile: 8.0.Dockerfile
     ports:
       - "8000:8000"
+    extra_hosts:
+      - "zabbix.local:192.168.24.215"
     volumes:
       - "projects:/var/www/html"
     depends_on:
