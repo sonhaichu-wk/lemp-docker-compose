@@ -61,6 +61,18 @@ services:
       - PMA_HOST=mysql
       - UPLOAD_LIMIT=200M
 
+  mongo:
+    image: mongo
+    volumes:
+      - "../database/mongo:/data/db"
+      - "desktop:/home"
+    ports:
+      - "27017:27017"
+    command: mongod --auth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+
 volumes:
   projects:
     driver: local
