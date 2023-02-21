@@ -46,7 +46,7 @@ services:
   #     - ${PWD}
 
   mysql:
-    image: mysql
+    image: mysql:8
     volumes:
       - "../database/mysql:/var/lib/mysql"
       - "desktop:/root"
@@ -62,7 +62,7 @@ services:
       - UPLOAD_LIMIT=200M
 
   mongo:
-    image: mongo
+    image: mongo:6
     volumes:
       - "../database/mongo:/data/db"
       - "desktop:/home"
@@ -72,6 +72,24 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+
+  postgres:
+    image: postgres:14
+    volumes:
+      - "../database/postgres:/var/lib/postgresql/data"
+      - "desktop:/home"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_ROOT_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
+
+  redis:
+    image: redis:7
+    volumes:
+      - "../database/redis:/data"
+    ports:
+      - "6379:6379"
 
 volumes:
   projects:
